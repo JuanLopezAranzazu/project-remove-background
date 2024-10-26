@@ -12,14 +12,17 @@ from PyQt5.QtCore import Qt
 from PIL import Image
 from utils.remove_bg import remove_background
 from utils.image import show_image
+from utils.config import load_last_path, save_last_path
 from constants import LABEL_WIDTH, LABEL_HEIGHT
+import os
 
 class App(QMainWindow):
   def __init__(self):
     super().__init__()
 
     # Variables
-    self.input_image_path = None
+    self.input_image_path = None # Ruta de la imagen seleccionada
+    self.last_path = load_last_path() # Cargar la última ruta utilizada
 
     self.create_widgets()
       
@@ -70,13 +73,21 @@ class App(QMainWindow):
 
   def select_image(self):
     # Abrir diálogo para seleccionar imagen
+    initial_dir = os.path.dirname(self.last_path) if self.last_path else ""
     file_dialog = QFileDialog()
-    file_path, _ = file_dialog.getOpenFileName(self, "Seleccionar Imagen", "", "Images (*.png *.jpg *.jpeg)")
+    file_path, _ = file_dialog.getOpenFileName(self,
+                                               "Seleccionar Imagen",
+                                               initial_dir,
+                                               "Images (*.png *.jpg *.jpeg)"
+                                              )
     
     if file_path:
       self.input_image_path = file_path
       self.btn_remove.setEnabled(True)
       show_image(self.original_image_label, file_path)
+      # Guardar la ruta
+      self.last_path = file_path
+      save_last_path(self.last_path)
     
   def on_remove_background(self):
     if self.input_image_path:
