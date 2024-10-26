@@ -4,6 +4,20 @@
 
 Programa para generar eliminar los fondos de las imágenes usando PyQt5
 
+### Estructura de archivos
+
+```
+app/
+│
+├── main.py                   # Archivo principal para ejecutar la aplicación
+├── constants.py              # Archivo que contiene las constantes usadas en la aplicación
+└── utils/
+    ├── __init__.py           # Hace que la carpeta sea un módulo de Python
+    ├── config.py             # Lógica para guardar la última ruta de las imágenes
+    ├── image.py              # Funciones de utilidad para la interfaz gráfica
+    └── remove_bg.py          # Lógica para eliminar el fondo de las imágenes
+```
+
 ### Crear entorno virtual
 
 Para crear un entorno virtual se debe ejecutar los siguientes comandos:
